@@ -30,7 +30,7 @@ public class RespawnManager : MonoBehaviour
             entity.transform.position = SpawnPoints[entity.PlayerID].position;
             yield return new WaitForSeconds(respawnTime);
             entity.gameObject.SetActive(true);
-            GameManager.Instance.OnPlayerRespawn(entity);
+            GameManager.Instance.EntityManager.OnPlayerRespawn(entity);
     }
 
 }

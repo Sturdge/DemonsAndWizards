@@ -10,17 +10,20 @@ public class Entity : MonoBehaviour
     [Header("Graphical Properties")]
     [SerializeField]
     private StatusText statusText;
+    [SerializeField]
+    private DamageText[] damageText;
 
     private float currentHitPoints;
     public float MovementMultiplier { get; protected set; }
     public List<StatusEffect> StatusEffects { get; private set; }
 
     public EntityData EntityData => _entityData;
-
-    private void Awake()
+    private int currentDamageText;
+    protected void Initialisation()
     {
         currentHitPoints = _entityData.MaxHitPoints;
         StatusEffects = new List<StatusEffect>();
+        currentDamageText = 0;
     }
 
     private void Start()
@@ -42,8 +45,17 @@ public class Entity : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHitPoints -= damage;
+        DisplayDamageText(damage);
         //if (currentHitPoints <= 0)
             //GameManager.Instance.OnEntityDie(this);
+    }
+
+    private void DisplayDamageText(float damage)
+    {
+        damageText[currentDamageText].Activate(damage);
+        currentDamageText++;
+        if (currentDamageText == damageText.Length)
+            currentDamageText = 0;
     }
 
     public void SetStatus(StatusEffect newStatus)

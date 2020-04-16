@@ -6,5 +6,7 @@ using UnityEngine;
 public class Wave : ScriptableObject
 {
     [SerializeField]
-    private WaveElement[] waveData;
+    private WaveElement[] _waveData;
+
+    public WaveElement[] WaveData => _waveData;
 }

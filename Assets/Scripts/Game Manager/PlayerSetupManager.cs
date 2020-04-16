@@ -20,11 +20,11 @@ public class PlayerSetupManager : MonoBehaviour
     {
         for (int i = 0; i < amountOfPlayers; i++)
         {
-            GameManager.Instance.inputManager.playerPrefab = characters[i];
-            GameManager.Instance.inputManager.playerPrefab.transform.position = spawnLocations[i].position;
-            GameManager.Instance.inputManager.JoinPlayer();
+            GameManager.Instance.InputManager.playerPrefab = characters[i];
+            GameManager.Instance.InputManager.playerPrefab.transform.position = spawnLocations[i].position;
+            GameManager.Instance.InputManager.JoinPlayer();
         }
 
-        GameManager.Instance.PopulateList();
+        GameManager.Instance.EntityManager.PopulateList();
     }
 }

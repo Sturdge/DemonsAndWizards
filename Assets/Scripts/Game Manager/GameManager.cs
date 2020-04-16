@@ -1,24 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+
+public enum GameState
+{
+    mainMenu,
+    characterSelect,
+    inGame,
+    paused
+}
 
 public class GameManager : MonoBehaviour
 {
 
     private static GameManager _instance;
-    public static GameManager Instance { get { return _instance; } }
+    public static GameManager Instance => _instance;
 
-    [SerializeField]
-    private CameraController mainCamera;
-    private RespawnManager respawnManager;
-    private PlayerSetupManager setupManager;
+    public GameState GameState { get; private set; }
+    public RespawnManager RespawnManager { get; private set; }
+    public PlayerSetupManager SetupManager { get; private set; }
+    public EntityManager EntityManager { get; private set; }
+    public PlayerInputManager InputManager { get; private set; }
+    public RoundManager RoundManager { get; private set; }
+    public WaveManager WaveManager { get; private set; }
 
-    public int PlayerID { get; private set; }
-    public int ActivePlayers { get; private set; }
-    public List<GameObject> Players { get; private set; }
-    public PlayerInputManager inputManager{get; private set; }
+    public delegate void GameStateChangeHandler();
+    public event GameStateChangeHandler OnStateChange;
 
     private void Awake()
     {
@@ -27,46 +33,36 @@ public class GameManager : MonoBehaviour
         else
             _instance = this;
 
-        Players = new List<GameObject>();
-        inputManager = GetComponent<PlayerInputManager>();
-        respawnManager = GetComponent<RespawnManager>();
-        setupManager = GetComponent<PlayerSetupManager>();
+        InputManager = GetComponent<PlayerInputManager>();
+        RespawnManager = GetComponent<RespawnManager>();
+        SetupManager = GetComponent<PlayerSetupManager>();
+        EntityManager = GetComponent<EntityManager>();
+        RoundManager = GetComponent<RoundManager>();
+        WaveManager = GetComponent<WaveManager>();
     }
 
     private void Start()
     {
-        PlayerID = 0;
-        ActivePlayers = 0;
-        setupManager.PlacePlayers();
+        Initialisation();
+    }
+
+    public void ChangeGameState(GameState newState)
+    {
+        GameState = newState;
+        OnStateChange();
+    }
+
+    private void Initialisation()
+    {
+        //Make sure managers that aren't needed are disabled
+        RespawnManager.enabled = false;
+        //SetupManager.enabled = false;
+        EntityManager.enabled = false;
+        //WaveManager.StartSpawning();
+        SetupManager.PlacePlayers();
     }
 
     private void OnPlayerJoined()
     {
-    }
-
-    public void OnEntityDie(Entity entity)
-    {
-    }
-
-    public void OnPlayerDie(PlayerController player)
-    {
-        ActivePlayers--;
-        mainCamera.activePlayers.Remove(player.gameObject);
-        StartCoroutine(respawnManager.Respawn(player));
-    }
-
-    public void OnPlayerRespawn(PlayerController player)
-    {
-        ActivePlayers++;
-        mainCamera.activePlayers.Add(player.gameObject);
-    }
-
-    public void PopulateList()
-    {
-        ActivePlayers++;
-        Players = GameObject.FindGameObjectsWithTag("Player").ToList();
-        mainCamera.activePlayers.Add(Players[PlayerID]);
-        inputManager.playerPrefab.transform.position = respawnManager.SpawnPoints[PlayerID].position;
-        PlayerID++;
     }
 }

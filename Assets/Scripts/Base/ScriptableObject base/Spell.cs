@@ -17,7 +17,8 @@ public class Spell : ScriptableObject
     private bool isOnCooldown;
     private float cooldownTimer;
     private PlayerController parent;
-    private ParticleSystem particle;
+    [SerializeField]
+    private GameObject particle;
 
     public int BaseDamage => _baseDamage;
 
@@ -26,7 +27,7 @@ public class Spell : ScriptableObject
         isOnCooldown = false;
         cooldownTimer = 0;
         parent = controller;
-        particle = parent.transform.Find("DefaultAttack").GetComponent<ParticleSystem>();
+        //particle = parent.transform.Find("DefaultAttack").GetComponent<ParticleSystem>();
         Debug.Log(particle);
     }
 
@@ -34,7 +35,7 @@ public class Spell : ScriptableObject
     {
         if (!isOnCooldown)
         {
-            particle.Emit(1);
+            Instantiate(particle, parent.SpellPoint.position, parent.transform.rotation);
             Debug.Log("Shoot");
             isOnCooldown = true;
         }

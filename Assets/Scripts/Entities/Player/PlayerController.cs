@@ -1,5 +1,4 @@
-﻿using StateMachine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,6 +21,8 @@ public class PlayerController : Entity
     private Spell defaultAttack;
     [SerializeField]
     private Skill skill;
+    [SerializeField]
+    private Transform _spellPoint;
 
     private bool isShooting;
     private float activationValue;
@@ -32,11 +33,12 @@ public class PlayerController : Entity
     public bool IsStrafing { get; private set; }
     public bool IsCharging { get; private set; }
     public Vector2 MovementInput { get; private set; }
-    public StateMachine<PlayerController> StateMachine { get; private set; }
     public CharacterController PlayerMovementController { get; private set; }
+    public StateMachine<PlayerController> StateMachine { get; private set; }
     public Dictionary<PlayerStates, State<PlayerController>> States { get; private set; }
 
     public float ChargeMultiplier => _chargeMultiplier;
+    public Transform SpellPoint => _spellPoint;
 
     private void Awake()
     {
@@ -52,7 +54,7 @@ public class PlayerController : Entity
             { PlayerStates.stun, new StunState(this) }
         };
 
-        PlayerID = GameManager.Instance.PlayerID;
+        PlayerID = GameManager.Instance.EntityManager.PlayerID;
 
         defaultAttack.Initialisation(this);
     }
@@ -60,7 +62,7 @@ public class PlayerController : Entity
     private void OnEnable()
     {
         activationValue = 0.15f;
-        StateMachine.ChangeState(States[PlayerStates.idle]);
+        StateMachine.ChangeState(IdleState.Instance);
     }
 
     private void Update()

@@ -1,11 +1,13 @@
-﻿using StateMachine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StunState : State<PlayerController>
 {
-    public StunState(PlayerController par) : base(par) { }
+    public StunState(PlayerController par) : base(par) 
+    { 
+    
+    }
 
     public override void EnterState()
     {

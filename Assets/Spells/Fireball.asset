@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Fireball
   m_EditorClassIdentifier: 
   _baseDamage: 10
-  cooldown: 0.1
+  cooldown: 0.5
   Auxiliary: {fileID: 11400000, guid: 3bd558436ce8ecf498023f8411bebc91, type: 2}
+  particle: {fileID: 2449377326909350477, guid: aecdffbeab7020741af4a3669ee9f510,
+    type: 3}

@@ -15,6 +15,8 @@ public class Projectile : MonoBehaviour
     private StatusEffect statusEffect;
     [SerializeField, Range(0, 1)]
     private float statusChance;
+    [SerializeField]
+    private float _projectileSpeed;
 
     private float damage;
 
@@ -27,7 +29,12 @@ public class Projectile : MonoBehaviour
 
     }
 
-    private void OnParticleCollision(GameObject other)
+    private void Update()
+    {
+        transform.position += transform.forward * _projectileSpeed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
         if (target != null)
@@ -42,6 +49,12 @@ public class Projectile : MonoBehaviour
                     target.SetStatus(statusEffect);
                 }
             }
+            Destroy(this.gameObject);
         }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }

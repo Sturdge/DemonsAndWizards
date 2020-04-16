@@ -34,7 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6414602222363623629}
-  - {fileID: 8567286502295981191}
+  - {fileID: 3079096764975038172}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,9 +129,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entityData: {fileID: 11400000, guid: 6a49d8bc3c89e8942beaab0e9a1f4d0b, type: 2}
   statusText: {fileID: 6414602222550587562}
+  damageText: []
   _chargeMultiplier: 2
   defaultAttack: {fileID: 11400000, guid: 2dbd44529fdc4414b84b3aede3ca47de, type: 2}
   skill: {fileID: 11400000, guid: e6210ac2d1ac2bb44aaef4a83f338605, type: 2}
+  _spellPoint: {fileID: 3079096764975038172}
 --- !u!114 &8337952578408403371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,87 +165,36 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!1001 &244881480172676653
-PrefabInstance:
+--- !u!1 &6336121741890341564
+GameObject:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2388077559045543560}
-    m_Modifications:
-    - target: {fileID: 8467017739395557974, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_Name
-      value: DefaultAttack
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467017739395557973, guid: 784dc55622db43740b80f948f5801a6e,
-        type: 3}
-      propertyPath: statusEffect
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bd558436ce8ecf498023f8411bebc91,
-        type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 784dc55622db43740b80f948f5801a6e, type: 3}
---- !u!4 &8567286502295981191 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8467017739395558058, guid: 784dc55622db43740b80f948f5801a6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 244881480172676653}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3079096764975038172}
+  m_Layer: 0
+  m_Name: Spell Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3079096764975038172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336121741890341564}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2388077559045543560}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2858460243730141571
 PrefabInstance:
   m_ObjectHideFlags: 0
