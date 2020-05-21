@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public PlayerInputManager InputManager { get; private set; }
     public RoundManager RoundManager { get; private set; }
     public WaveManager WaveManager { get; private set; }
+    public UIManager UIManager { get; private set; }
 
     public delegate void GameStateChangeHandler();
     public event GameStateChangeHandler OnStateChange;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         EntityManager = GetComponent<EntityManager>();
         RoundManager = GetComponent<RoundManager>();
         WaveManager = GetComponent<WaveManager>();
+        UIManager = GetComponent<UIManager>();
     }
 
     private void Start()
@@ -56,10 +58,36 @@ public class GameManager : MonoBehaviour
     {
         //Make sure managers that aren't needed are disabled
         RespawnManager.enabled = false;
-        //SetupManager.enabled = false;
+        SetupManager.enabled = false;
         EntityManager.enabled = false;
-        //WaveManager.StartSpawning();
+        RoundManager.enabled = false;
+        WaveManager.enabled = false;
+        UIManager.enabled = false;
+        OnGameStart();
+    }
+
+    public void OnGameStart()
+    {
+        RespawnManager.enabled = true;
+        SetupManager.enabled = true;
+        EntityManager.enabled = true;
+        RoundManager.enabled = true;
+        WaveManager.enabled = true;
+        UIManager.enabled = true;
+        EntityManager.Initialisation();
+        WaveManager.Initialisation();
         SetupManager.PlacePlayers();
+        RoundManager.StartBuildRound();
+        UIManager.UpdateGoldText();
+    }
+
+    public void OnGameEnd()
+    {
+        RespawnManager.enabled = false;
+        SetupManager.enabled = false;
+        EntityManager.enabled = false;
+        RoundManager.enabled = false;
+        WaveManager.enabled = false;
     }
 
     private void OnPlayerJoined()

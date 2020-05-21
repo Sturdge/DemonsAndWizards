@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
 
     [SerializeField]
-    private Vector3 offset;
+    private Vector3 offset = Vector3.zero;
     [SerializeField]
     private float smoothing = 0.125f;
 
@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
         defaultZoom = transform.position;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         numberOfPlayers = activePlayers.Count;
         if (numberOfPlayers > 0)
@@ -49,18 +49,21 @@ public class CameraController : MonoBehaviour
 
         if (numberOfPlayers > 0)
         {
-            Vector4 values = new Vector4();
+            Vector3 values = new Vector3();
+            Vector3 adjustedValues = new Vector3();
 
             for (int i = 0; i < activePlayers.Count; i++)
             {
                 values.x += activePlayers[i].transform.position.x;
-                values.y += activePlayers[i].transform.position.z;
+                values.y += activePlayers[i].transform.position.y;
+                values.z += activePlayers[i].transform.position.z;
             }
 
-            values.z = values.x / numberOfPlayers;
-            values.w = values.y / numberOfPlayers;
+            adjustedValues.x = values.x / numberOfPlayers;
+            adjustedValues.y = values.y / numberOfPlayers;
+            adjustedValues.z = values.z / numberOfPlayers;
 
-            value = new Vector3(values.z, 0, values.w);
+            value = adjustedValues;
 
             return value;
         }
@@ -97,5 +100,13 @@ public class CameraController : MonoBehaviour
         }
         else
             return offset + GetCentrePoint();
+    }
+
+    public void PopulateList(List<PlayerController> players)
+    {
+        for(int i = 0; i < players.Count; i++)
+        {
+            activePlayers.Add(players[i].gameObject);
+        }
     }
 }

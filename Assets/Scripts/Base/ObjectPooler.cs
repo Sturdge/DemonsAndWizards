@@ -6,34 +6,34 @@ using UnityEngine;
 public class PoolableObject
 {
     [SerializeField]
-    private string _name;
+    private string _name = string.Empty;
     [SerializeField]
-    private GameObject _prefab;
+    private UnityEngine.GameObject _prefab = null;
     [SerializeField]
-    private int _size;
+    private int _size = 0;
 
     public string Name => _name;
-    public GameObject Prefab => _prefab;
+    public UnityEngine.GameObject Prefab => _prefab;
     public int Size => _size;
 }
 
 public class ObjectPooler : MonoBehaviour
 {
     [SerializeField]
-    private List<PoolableObject> pools;
-    private Dictionary<string, Queue<GameObject>> poolDictionary;
+    private List<PoolableObject> pools = null;
+    private Dictionary<string, Queue<UnityEngine.GameObject>> poolDictionary;
 
     private void Awake()
     {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary = new Dictionary<string, Queue<UnityEngine.GameObject>>();
 
         foreach (PoolableObject pool in pools)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
+            Queue<UnityEngine.GameObject> objectPool = new Queue<UnityEngine.GameObject>();
 
             for (int i = 0; i < pool.Size; i++)
             {
-                GameObject obj = Instantiate(pool.Prefab);
+                UnityEngine.GameObject obj = Instantiate(pool.Prefab);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -42,16 +42,16 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    public GameObject SpawnFromPool(string name, Vector3 pos, Quaternion rot)
+    public UnityEngine.GameObject SpawnFromPool(string name, Transform parent)
     {
-        GameObject objectToSpawn = null;
+        UnityEngine.GameObject objectToSpawn = null;
 
         if (poolDictionary.ContainsKey(name))
         {
             objectToSpawn = poolDictionary[name].Dequeue();
 
-            objectToSpawn.transform.position = pos;
-            objectToSpawn.transform.rotation = rot;
+            objectToSpawn.transform.position = parent.position;
+            objectToSpawn.transform.rotation = parent.rotation;
             objectToSpawn.SetActive(true);
 
             poolDictionary[name].Enqueue(objectToSpawn);

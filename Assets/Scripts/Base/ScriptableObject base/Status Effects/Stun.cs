@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using StateMachine.PlayerStates;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class Stun : StatusEffect
     public override void OnStart(Entity parent)
     {
         base.OnStart(parent);
-        parentPlayerController.StateMachine.ChangeState(parentPlayerController.States[PlayerStates.stun]);
+        parentPlayerController.StateMachine.ChangeState(StunState.Instance);
     }
 
     public override void DoStatusEffect(float deltaTime)
@@ -20,7 +21,7 @@ public class Stun : StatusEffect
 
     public override void OnEnd()
     {
-        parentPlayerController.StateMachine.ChangeState(parentPlayerController.States[PlayerStates.idle]);
+        parentPlayerController.StateMachine.ChangeState(IdleState.Instance);
         base.OnEnd();
     }
 }

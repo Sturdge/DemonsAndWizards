@@ -1,27 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class IdleState : State<PlayerController>
+﻿namespace StateMachine.PlayerStates
 {
-    private static IdleState _instance;
-    public static IdleState Instance => _instance;
-    public IdleState(PlayerController par) : base(par)
+    public class IdleState : State<PlayerController>
     {
-        if (_instance == null)
-            _instance = this;
-    }
+        #region Fields
+        #endregion
 
-    public override void EnterState()
-    {
-    }
+        #region Auto Properties
+        #endregion
 
-    public override void ExitState()
-    {
-    }
+        #region Full Properties
 
-    public override void UpdateState()
-    {
-        parent.Shooting();
+        private static IdleState _instance;
+        public static IdleState Instance
+        {
+            get
+            {
+
+                if (_instance == null)
+                    _instance = new IdleState();
+
+                return _instance;
+
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public override void EnterState(PlayerController parent)
+        {
+        }
+
+        public override void ExitState(PlayerController parent)
+        {
+        }
+
+        public override void UpdateState(PlayerController parent)
+        {
+            parent.Shooting();
+        }
+
+        #endregion
+
+        #region Private Methods
+        #endregion
     }
 }

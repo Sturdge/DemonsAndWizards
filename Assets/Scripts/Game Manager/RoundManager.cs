@@ -2,37 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class RoundManager : MonoBehaviour
 {
+    #region Serialized Fields
+
     [Header("Round Settings")]
     [SerializeField]
-    private float buildTime;
+    private float _buildTime = 0;
 
     [Header("Level Settings")]
     [SerializeField]
-    private GameObject _nexus;
+    private Nexus _nexus = null;
 
-    public GameObject Nexus => _nexus;
+    #endregion
 
-    private bool isBuildRound;
+    #region Fields
+
+    private GameManager gameManager;
+
+    #endregion
+
+    #region Auto Properties
+    #endregion
+
+    #region Full Properties
+
+    public Nexus Nexus => _nexus;
+    public float BuildTime => _buildTime;
+
+    #endregion
+
+    #region Unity Callbacks
 
     private void Awake()
     {
-        isBuildRound = true;
+        gameManager = GameManager.Instance;
     }
 
+    #endregion
+
+    #region Public Methods
     public void StartBuildRound()
     {
-        isBuildRound = true;
         StartCoroutine(BuildRoundTimer());
     }
 
-    private IEnumerator BuildRoundTimer()
+    public void OnBuildRoundEnd()
     {
-        yield return new WaitForSeconds(buildTime);
-        isBuildRound = false;
+        gameManager.WaveManager.StartSpawning();
     }
 
+    #endregion
+
+    #region Private Methods
+
+    private IEnumerator BuildRoundTimer()
+    {
+        yield return new WaitForSeconds(_buildTime);
+        OnBuildRoundEnd();
+    }
+
+    #endregion
 }

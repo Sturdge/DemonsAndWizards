@@ -1,31 +1,59 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StunState : State<PlayerController>
+namespace StateMachine.PlayerStates
 {
-    public StunState(PlayerController par) : base(par) 
-    { 
-    
-    }
-
-    public override void EnterState()
+    public class StunState : State<PlayerController>
     {
-        parent.StartCoroutine(StunTimer());
-    }
+        #region Fields
+        #endregion
 
-    public override void ExitState()
-    {
+        #region Auto Properties
+        #endregion
 
-    }
+        #region Full Properties
 
-    public override void UpdateState()
-    {
-    }
+        private static StunState _instance;
+        public static StunState Instance
+        {
+            get
+            {
 
-    private IEnumerator StunTimer()
-    {
-        yield return new WaitForSeconds(3);
-        parent.StateMachine.ChangeState(parent.States[PlayerStates.idle]);
+                if (_instance == null)
+                    _instance = new StunState();
+
+                return _instance;
+
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public override void EnterState(PlayerController parent)
+        {
+            parent.StartCoroutine(StunTimer(parent));
+        }
+
+        public override void ExitState(PlayerController parent)
+        {
+
+        }
+
+        public override void UpdateState(PlayerController parent)
+        {
+        }
+
+        #endregion
+
+        #region Private Methods
+        private IEnumerator StunTimer(PlayerController parent)
+        {
+            yield return new WaitForSeconds(3);
+            parent.StateMachine.ChangeState(IdleState.Instance);
+        }
+
+        #endregion
     }
 }

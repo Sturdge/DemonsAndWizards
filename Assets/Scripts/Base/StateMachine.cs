@@ -1,33 +1,37 @@
-﻿public class StateMachine<T>
+﻿namespace StateMachine
 {
-    public State<T> CurrentState { get; private set; }
-    private readonly T parent;
-
-    public StateMachine(T par)
+    public class StateMachine<T>
     {
-        parent = par;
-        CurrentState = null;
+        public State<T> CurrentState { get; private set; }
+        private readonly T parent;
+
+        public StateMachine(T par)
+        {
+            parent = par;
+            CurrentState = null;
+        }
+
+
+        public void ChangeState(State<T> newState)
+        {
+            if (CurrentState != null)
+                CurrentState.ExitState(parent);
+            CurrentState = newState;
+            CurrentState.EnterState(parent);
+        }
+
+        public void Update()
+        {
+            if (CurrentState != null)
+                CurrentState.UpdateState(parent);
+        }
     }
 
-
-    public void ChangeState(State<T> newState)
+    public abstract class State<T>
     {
-        if (CurrentState != null)
-            CurrentState.ExitState();
-        CurrentState = newState;
-        CurrentState.EnterState();
-    }
-}
 
-public abstract class State<T>
-{
-    protected T parent;
-    public State(T par)
-    {
-        parent = par;
+        public abstract void EnterState(T parent);
+        public abstract void UpdateState(T parent);
+        public abstract void ExitState(T parent);
     }
-
-    public abstract void EnterState();
-    public abstract void UpdateState();
-    public abstract void ExitState();
 }

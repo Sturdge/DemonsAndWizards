@@ -5,9 +5,9 @@ public class StatusText : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField]
-    private float duration;
+    private float duration = 0;
     [SerializeField]
-    private float speed;
+    private float speed = 0;
 
     private float elapsedTime;
     private Vector3 startLoc;

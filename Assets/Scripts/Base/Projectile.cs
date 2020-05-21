@@ -1,32 +1,33 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
     [Header("Projectile Attributes")]
     [SerializeField]
-    private string _name;
+    private string _name = string.Empty;
     [SerializeField]
-    private string _description;
+    private string _description = string.Empty;
     [SerializeField]
-    private object temp;
-    [SerializeField]
-    private StatusEffect statusEffect;
+    private StatusEffect _statusEffect = null;
     [SerializeField, Range(0, 1)]
-    private float statusChance;
+    private float _statusChance = 0;
     [SerializeField]
-    private float _projectileSpeed;
+    private float _projectileSpeed = 0;
+    [SerializeField]
+    private float timeout = 0;
+    [SerializeField]
+    protected bool persists;
 
-    private float damage;
+    protected float damage;
 
     public string Name => _name;
     public string Description => _description;
-
-    public void SetDamage(int baseDamage, int skillLevel)
+    protected StatusEffect StatusEffect => _statusEffect;
+    protected float StatusChance => _statusChance;
+    private void OnEnable()
     {
-        damage = baseDamage * (skillLevel * 0.5f);
-
+        StartCoroutine(TimedDisable(timeout));
     }
 
     private void Update()
@@ -34,27 +35,35 @@ public class Projectile : MonoBehaviour
         transform.position += transform.forward * _projectileSpeed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
+    {
+        CheckCollision(other);
+    }
+
+    protected abstract void CheckCollision(Collider other);
+
+    protected void CollisionLogic(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
         if (target != null)
         {
             target.TakeDamage(damage);
             float statusRoll = Random.Range(0, 1);
-            if (statusEffect != null)
+            if (StatusEffect != null)
             {
-                if (statusRoll <= statusChance)
+                if (statusRoll <= StatusChance)
                 {
-                    Debug.Log("Inflicted");
-                    target.SetStatus(statusEffect);
+                    target.SetStatus(StatusEffect);
                 }
             }
-            Destroy(this.gameObject);
+            if (!persists)
+                gameObject.SetActive(false);
         }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+    }
 
+    private IEnumerator TimedDisable(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.SetActive(false);
     }
 }

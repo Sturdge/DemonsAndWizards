@@ -64,7 +64,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Status!
+  m_text: 'Status!
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f24c577d9a513a489b37dd79e1cade4, type: 2}
   m_sharedMaterial: {fileID: 1540539531601420019, guid: 9f24c577d9a513a489b37dd79e1cade4,
@@ -134,9 +136,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 9128361923552971046}
-    characterCount: 7
+    characterCount: 8
     spriteCount: 0
-    spaceCount: 0
+    spaceCount: 1
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -199,7 +201,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9128361924440281426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9128361923552971048}

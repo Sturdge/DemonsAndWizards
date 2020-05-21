@@ -16,7 +16,3 @@ MonoBehaviour:
   - _prefab: {fileID: 1753106303049340193, guid: 09aabd68de807184196161042ae57da7,
       type: 3}
     _number: 5
-  - _prefab: {fileID: 1753106303049340193, guid: 09aabd68de807184196161042ae57da7,
-      type: 3}
-    _number: 5
-  _entities: []

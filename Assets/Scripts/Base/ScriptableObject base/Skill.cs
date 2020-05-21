@@ -5,20 +5,20 @@ public class Skill : ScriptableObject
 {
     [Header("Skill Attributes")]
     [SerializeField]
-    private int _manaCost;
+    private int _manaCost = 0;
     [SerializeField]
-    private int _baseDamage;
+    private int _baseDamage = 0;
     [SerializeField]
-    private int cooldown;
+    private int cooldown = 0;
     [SerializeField]
-    private GameObject objectToSpawn;
+    private PlayerProjectile objectToSpawn = null;
 
     private float cooldownTimer;
     private bool isOnCooldown;
     private PlayerController parent;
 
-    public int ManaCost { get { return _manaCost; } }
-    public int BaseDamage { get { return _baseDamage; } }
+    public int ManaCost => _manaCost;
+    public int BaseDamage => _baseDamage;
 
     public void Initialisation(PlayerController controller)
     {
@@ -29,7 +29,11 @@ public class Skill : ScriptableObject
 
     public void DoSkill()
     {
-
+        if (!isOnCooldown)
+        {
+            Instantiate(objectToSpawn, parent.SpellPoint.position, parent.SpellPoint.rotation);
+            isOnCooldown = true;
+        }
     }
 
     public void UpdateCooldown(float deltatime)

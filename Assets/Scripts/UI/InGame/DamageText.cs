@@ -7,9 +7,9 @@ public class DamageText : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField]
-    private float duration;
+    private float duration = 0;
     [SerializeField]
-    private float speed;
+    private float speed = 0;
 
     private float elapsedTime;
     private Vector3 startLoc;
@@ -17,13 +17,14 @@ public class DamageText : MonoBehaviour
 
     private void Awake()
     {
-        startLoc = transform.localPosition;
         statusText = GetComponent<TextMeshProUGUI>();
+        startLoc = transform.position;
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        gameObject.SetActive(false);
+        transform.position = startLoc;
+        elapsedTime = 0;
     }
 
     private void Update()
@@ -32,22 +33,9 @@ public class DamageText : MonoBehaviour
         Timer();
     }
 
-    private void OnDisable()
+    public void SetText(float damage)
     {
-        ResetPosition();
-    }
-
-    public void Activate(float damage)
-    {
-        elapsedTime = 0;
-        gameObject.SetActive(false);
         statusText.text = damage.ToString();
-        gameObject.SetActive(true);
-    }
-
-    private void ResetPosition()
-    {
-        transform.localPosition = startLoc;
     }
 
     private void Timer()

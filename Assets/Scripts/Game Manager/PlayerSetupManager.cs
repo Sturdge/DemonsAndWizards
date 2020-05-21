@@ -6,15 +6,11 @@ public class PlayerSetupManager : MonoBehaviour
 {
     [Header("Player Settings")]
     [SerializeField]
-    private GameObject[] characters;
+    private UnityEngine.GameObject[] characters = null;
     [SerializeField]
-    private Transform[] spawnLocations;
+    private Transform[] spawnLocations = null;
     [SerializeField, Range(1, 4)]
-    private int amountOfPlayers;
-
-    private void Awake()
-    {
-    }
+    private int amountOfPlayers = 1;
 
     public void PlacePlayers()
     {

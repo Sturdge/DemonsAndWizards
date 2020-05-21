@@ -13,7 +13,6 @@ public class DamageOverTime : StatusEffect
         base.OnStart(parent);
         interval = 1;
         period = interval;
-        Debug.Log("Burned!");
     }
 
     public override void DoStatusEffect(float deltaTime)

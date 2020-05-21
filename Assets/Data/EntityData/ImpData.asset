@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHitPoints: 100
   _baseSpeed: 5
+  _attackRange: 5
+  _defaultTargetTag: Nexus

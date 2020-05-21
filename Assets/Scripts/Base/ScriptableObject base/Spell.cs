@@ -2,63 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "NewSpell", menuName = "Attacks/Spell")]
-public class Spell : ScriptableObject
+public class Spell : Attack
 {
-    [Header("Spell Attributes")]
-    [SerializeField]
-    private int _baseDamage;
-    [SerializeField]
-    private float cooldown;
-    [SerializeField]
-    private StatusEffect Auxiliary;
-
-    private bool isOnCooldown;
-    private float cooldownTimer;
     private PlayerController parent;
-    [SerializeField]
-    private GameObject particle;
-
-    public int BaseDamage => _baseDamage;
 
     public void Initialisation(PlayerController controller)
     {
         isOnCooldown = false;
         cooldownTimer = 0;
         parent = controller;
-        //particle = parent.transform.Find("DefaultAttack").GetComponent<ParticleSystem>();
-        Debug.Log(particle);
+        ray = new Ray(parent.transform.position, parent.transform.forward * 1);
     }
 
-    public void DoAttack()
+    public override void DoAttack()
     {
         if (!isOnCooldown)
         {
-            Instantiate(particle, parent.SpellPoint.position, parent.transform.rotation);
-            Debug.Log("Shoot");
-            isOnCooldown = true;
-        }
-    }
-
-    public void UpdateCooldown(float deltatime)
-    {
-        if (isOnCooldown)
-        {
-            if (cooldownTimer < cooldown)
+            if (projectile != null)
             {
-                cooldownTimer += deltatime;
-                CheckTimerEnd();
+
+                PlayerProjectile projectile = parent.ObjectPooler.SpawnFromPool("Projectile", parent.SpellPoint).GetComponent<PlayerProjectile>();
+                projectile.SetDamage(BaseDamage, parent.SpellLevel);
+                isOnCooldown = true;
             }
         }
     }
 
-    private void CheckTimerEnd()
-    {
-        if (cooldownTimer >= cooldown)
-        {
-            cooldownTimer = 0;
-            isOnCooldown = false;
-        }
-    }
+    
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 public abstract class StatusEffect : ScriptableObject
 {
     [SerializeField]
-    private string _name;
+    private string _name = string.Empty;
     [SerializeField]
-    private Color _textColour;
+    private Color _textColour = Color.white;
     [SerializeField]
-    protected int duration;
+    protected int duration = 0;
 
     protected float elapsedTime;
 

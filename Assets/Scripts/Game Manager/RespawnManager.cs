@@ -5,22 +5,17 @@ using UnityEngine;
 public class RespawnManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform[] _spawnPoints;
+    private Transform[] _spawnPoints = null;
     [SerializeField]
-    private float respawnTime;
+    private float respawnTime = 0;
 
-    public Transform[] SpawnPoints { get { return _spawnPoints; } }
+    private GameManager gameManager;
 
-    // Start is called before the first frame update
-    void Start()
+    public Transform[] SpawnPoints => _spawnPoints;
+
+    private void Awake()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        gameManager = GameManager.Instance;
     }
 
     public IEnumerator Respawn(PlayerController entity)
@@ -30,7 +25,7 @@ public class RespawnManager : MonoBehaviour
             entity.transform.position = SpawnPoints[entity.PlayerID].position;
             yield return new WaitForSeconds(respawnTime);
             entity.gameObject.SetActive(true);
-            GameManager.Instance.EntityManager.OnPlayerRespawn(entity);
+            gameManager.EntityManager.OnPlayerRespawn(entity);
     }
 
 }

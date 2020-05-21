@@ -2,51 +2,84 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveState : State<PlayerController>
+namespace StateMachine.PlayerStates
 {
-
-    private float speed;
-    private Vector3 movement;
-    private Quaternion targetRotation;
-
-    public MoveState(PlayerController par) : base(par) { }
-
-    public override void EnterState()
+    public class MoveState : State<PlayerController>
     {
-        //Acceleration and animation?
-    }
+        #region Fields
 
-    public override void ExitState()
-    {
-        //Decceleration and animation?
-    }
+        private float speed;
+        private Vector3 movement;
+        private Quaternion targetRotation;
 
-    public override void UpdateState()
-    {
-        MovementAndRotation();
-        parent.Shooting();
-    }
+        #endregion
 
-    private void MovementAndRotation()
-    {
-        movement = new Vector3
+        #region Auto Properties
+        #endregion
+
+        #region Full Properties
+
+        private static MoveState _instance;
+        public static MoveState Instance
         {
-            x = parent.MovementInput.x,
-            z = parent.MovementInput.y
-        };
+            get
+            {
 
-        if (movement != Vector3.zero)
-            targetRotation = Quaternion.LookRotation(movement);
+                if (_instance == null)
+                    _instance = new MoveState();
 
-        if (parent.IsCharging)
-        {
-            speed = parent.EntityData.BaseSpeed * parent.ChargeMultiplier * parent.MovementMultiplier;
+                return _instance;
+
+            }
         }
-        else
-            speed = parent.EntityData.BaseSpeed * parent.MovementMultiplier;
 
-        parent.PlayerMovementController.Move(movement * speed * Time.deltaTime);
-        if (!parent.IsStrafing)
-            parent.transform.rotation = targetRotation;
+        #endregion
+
+        #region Public Methods
+
+        public override void EnterState(PlayerController parent)
+        {
+            //Acceleration and animation?
+        }
+
+        public override void ExitState(PlayerController parent)
+        {
+            //Decceleration and animation?
+        }
+
+        public override void UpdateState(PlayerController parent)
+        {
+            MovementAndRotation(parent);
+            parent.Shooting();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void MovementAndRotation(PlayerController parent)
+        {
+            movement = new Vector3
+            {
+                x = parent.MovementInput.x,
+                z = parent.MovementInput.y
+            };
+
+            if (movement != Vector3.zero)
+                targetRotation = Quaternion.LookRotation(movement);
+
+            if (parent.IsCharging)
+            {
+                speed = parent.EntityData.BaseSpeed * parent.ChargeMultiplier * parent.MovementMultiplier;
+            }
+            else
+                speed = parent.EntityData.BaseSpeed * parent.MovementMultiplier;
+
+            parent.PlayerMovementController.Move(movement * speed * Time.deltaTime);
+            if (!parent.IsStrafing)
+                parent.transform.rotation = targetRotation;
+        }
+
+        #endregion
     }
 }

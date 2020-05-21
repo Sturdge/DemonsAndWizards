@@ -7,10 +7,10 @@ using UnityEngine;
 public class WaveElement
 {
     [SerializeField]
-    private GameObject _prefab;
+    private UnityEngine.GameObject _prefab = null;
     [SerializeField]
-    private int _number;
+    private int _number = 0;
 
-    public GameObject Prefab => _prefab;
+    public UnityEngine.GameObject Prefab => _prefab;
     public int Number => _number;
 }
